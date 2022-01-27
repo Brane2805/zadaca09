@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const useri = 
+[
+  {
+  name: 'Bla'
 }
+];
+export default class App extends React.Component {
+  constructor () {
+  	super();
+    this.state = {
+    	users: useri
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-export default App;
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { users } = this.state,
+    name = event.target.name.value;
+    this.setState({ users: [...users,{
+      name  
+    }] 
+  }, () => {
+    document.querySelector('#name').value='';
+  });
+  }
+
+  handleButtonPress = () => {
+    const { users } = this.state;
+    let div = document.querySelector('#ispis');
+    console.log (
+      users.map((user) => user.name)
+    )
+    div.append(users.map((user) => 
+    user.name
+  ))
+  }
+  
+  render() {
+  
+    return (
+      <div>
+      <form onSubmit={this.handleSubmit}>
+        <label>Ime:</label> 
+        <input type="text" name="name" id="name" />
+        <input type="submit" value="Potvrdi" />
+      </form>
+      <button onClick={this.handleButtonPress}>Početno stanje</button>
+      <div id="ispis"></div>
+      </div>
+    );
+  }
+}
